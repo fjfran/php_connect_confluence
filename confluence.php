@@ -56,9 +56,6 @@ class Confluence
         $header[] = "Authorization: Basic " . base64_encode("user_confluence:!con_pass_957");
         $header[] = "Content-Type: application/json";
 
-        $page_id = 123;
-
-        $url = "https://confluence.domain.com/rest/api/content/" . $page_id . "?expand=body.view";
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         curl_setopt($ch, CURLOPT_URL, $url);
 

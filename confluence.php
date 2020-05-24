@@ -53,7 +53,7 @@ class Confluence
         curl_setopt($ch, CURLOPT_ENCODING, '');
 
         $header = array();
-        $header[] = "Authorization: Basic " . base64_encode("user_confluence:!con_pass_957");
+        $header[] = "Authorization: Basic " . base64_encode($this->confluence_user.":".$this->confluence_pass);
         $header[] = "Content-Type: application/json";
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
@@ -61,7 +61,7 @@ class Confluence
 
         $result = curl_exec( $ch );
 
-        echo json_decode($result, true);
+        return json_decode($result, true);
     }
 
     /**
@@ -90,7 +90,7 @@ class Confluence
                 $tags = $doc->getElementsByTagName('img');//Get all img tags
                 foreach ($tags as $tag) {
                     $filename = $tag->getAttribute('data-linked-resource-default-alias'); //Get file name
-                    $new_src_url = config_item('confluence_images_link') . $page_id . '/' . $filename ; //We add the new url
+                    $new_src_url = $this->confluence_images_dir . $page_id . '/' . $filename ; //We add the new url
                     $tag->setAttribute('src', $new_src_url); //Apply the new url
                 }
                 $response['content'] = $doc->saveHTML();
